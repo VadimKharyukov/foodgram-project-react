@@ -1,4 +1,5 @@
 version: '3.7'
+
 services:
   db:
     image: postgres:13.0-alpine
@@ -8,7 +9,7 @@ services:
       - ./.env
 
   backend:
-      image: vaden45/foodgram-project-react
+    image: vaden45/foodgram-project-react
     build:
       context: ../backend
     restart: always
@@ -28,6 +29,7 @@ services:
       - ../frontend/:/app/result_build/
   nginx:
     image: nginx:1.19.3
+
     ports:
       - "80:80"
     volumes:
@@ -37,9 +39,11 @@ services:
       - ../static:/var/html/static/
       - media_value:/var/html/media/
     restart: always
+
     depends_on:
       - backend
       - frontend
+
 volumes:
   static_value:
   media_value:
