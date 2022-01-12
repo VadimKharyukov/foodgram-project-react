@@ -106,4 +106,3 @@ class Purchase(models.Model):
                 fields=['user', 'recipe'], name='unique_purchase'
             )
         ]
-

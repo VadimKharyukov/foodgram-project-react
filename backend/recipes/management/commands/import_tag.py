@@ -13,7 +13,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         with open(DATA_PATH + 'tags.csv',
-                     mode="r", encoding="utf-8") as f_obj:
+                  mode="r", encoding="utf-8") as f_obj:
             reader = csv.reader(f_obj)
             for row in reader:
                 if len(row) == 3:
