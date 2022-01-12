@@ -2,11 +2,6 @@ from django.db.models import Sum
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import status
-from rest_framework.decorators import action
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from recipes.filters import IngredientSearchFilter, RecipeFilter
 from recipes.models import (Favorite, Ingredient, Purchase, Recipe,
                             RecipeIngredient, Tag)
@@ -15,6 +10,11 @@ from recipes.permissions import IsAuthorOrReadOnly
 from recipes.serializers import (FavoriteSerializers, IngredientSerializers,
                                  PurchaseSerializers, RecipeListSerializers,
                                  RecipeSerializers, TagSerializers)
+from rest_framework import status
+from rest_framework.decorators import action
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
 
 class TagsViewSet(ReadOnlyModelViewSet):
