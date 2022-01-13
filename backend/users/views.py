@@ -1,6 +1,5 @@
 from django.shortcuts import get_object_or_404
 from recipes.pagination import CustomPaginator
-from recipes.permissions import IsAuthorOrReadOnly
 from rest_framework import status
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -11,14 +10,16 @@ from users.serializers import FollowListSerializers, FollowSerializers
 
 
 class FollowListViewSet(ListAPIView):
-    permission_classes = (IsAuthorOrReadOnly, )
+    permission_classes = (IsAuthenticated, )
     pagination_class = CustomPaginator
 
     def get(self, request):
         user = request.user
         queryset = CustomUser.objects.filter(following__user=user)
         page = self.paginate_queryset(queryset)
-        serializer = FollowListSerializers(page, many=True)
+        serializer = FollowListSerializers(page,
+                                           many=True,
+                                           context={'request': request})
         return self.get_paginated_response(serializer.data)
 
 

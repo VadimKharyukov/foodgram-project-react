@@ -1,0 +1,32 @@
+version: '3.3'
+services:
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - /var/lib/postgresql/data/
+    env_file:
+      - ./.env
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - static_value:/backend/static/
+      - media_value:/backend/media/
+    depends_on:
+      - db
+    env_file:
+      - ./.env
+
+  frontend:
+#    build: # если надо собрать в локале
+#      context: ../frontend
+#      dockerfile: Dockerfile
+    image: eugenesal/foodgram_frontend
+    volumes:
+      - ../frontend/:/app/result_build/
+  nginx:
+    image: nginx:1.19.3
+    ports:
+      - 80:80
