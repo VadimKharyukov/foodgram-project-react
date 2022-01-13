@@ -25,8 +25,8 @@ docker-compose up -d --build
 4.Миграции.
 
 ```
-docker-compose exec web python manage.py makemigrations
-docker-compose exec web python manage.py migrate
+docker-compose exec backend python manage.py makemigrations
+docker-compose exec backend python manage.py migrate
 ```
 5. Сбор статитики.
 ```
