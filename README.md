@@ -30,7 +30,7 @@ docker-compose exec backend python manage.py migrate
 ```
 5. Сбор статитики.
 ```
-docker-compose exec web python manage.py collectstatic --no-input
+docker-compose exec backend python manage.py collectstatic --no-input
 ```
 6. Admin сайта и redoc.
 ```
