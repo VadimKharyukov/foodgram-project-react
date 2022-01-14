@@ -23,7 +23,7 @@ services:
 #    build: # если надо собрать в локале
 #      context: ../frontend
 #      dockerfile: Dockerfile
-    image: eugenesal/foodgram_frontend
+    image: vaden45/foodgram-frontend
     volumes:
       - ../frontend/:/app/result_build/
   nginx:

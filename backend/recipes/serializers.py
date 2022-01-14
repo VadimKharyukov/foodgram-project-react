@@ -114,7 +114,8 @@ class RecipeSerializers(serializers.ModelSerializer):
         self.create_tags(tags, instance)
         self.create_ingredient(ingredients, instance)
         RecipeIngredient.objects.filter(recipe=instance).all().delete()
-        return instance.save()
+        instance.save()
+        return instance
 
 
 class FavoriteSerializers(serializers.ModelSerializer):
