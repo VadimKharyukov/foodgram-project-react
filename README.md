@@ -31,13 +31,17 @@ docker-compose exec backend python manage.py migrate
 5. Сбор статитики.
 ```
 docker-compose exec backend python manage.py collectstatic --no-input
+
 ```
-6. Admin сайта и redoc.
+6. Саит доступен по адресу.
 ```
-62.84.114.36/redoc/
+62.84.114.36
+```
+7. Admin сайта.
+```
 62.84.114.36/admin/
 ```
-7. Более подробная информация доступна
+8. Более подробная информация доступна
 ```
 62.84.114.36/api/docs/
 ```
