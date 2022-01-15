@@ -12,6 +12,7 @@ services:
     image: vaden45/foodgram-project-react
     restart: always
     volumes:
+      - ../data/:/foodgram-project-react/data/
       - static_value:/backend/static/
       - media_value:/backend/media/
     depends_on:

@@ -1,7 +1,8 @@
 from drf_extra_fields.fields import Base64ImageField
+from rest_framework import serializers
+
 from recipes.models import (Favorite, Ingredient, Purchase, Recipe,
                             RecipeIngredient, Tag)
-from rest_framework import serializers
 from users.serializers import CustomUserSerializers
 
 
@@ -103,19 +104,11 @@ class RecipeSerializers(serializers.ModelSerializer):
         return RecipeListSerializers(instance, context=context).data
 
     def update(self, instance, validated_data):
-        instance.image = validated_data.get('image', instance.image)
-        instance.name = validated_data.get('name', instance.name)
-        instance.text = validated_data.get('text', instance.text)
-        instance.cooking_time = validated_data.get('cooking_time',
-                                                   instance.cooking_time)
         instance.tags.clear()
-        tags = validated_data.get('tags')
-        ingredients = validated_data.get('ingredients')
-        self.create_tags(tags, instance)
-        self.create_ingredient(ingredients, instance)
         RecipeIngredient.objects.filter(recipe=instance).all().delete()
-        instance.save()
-        return instance
+        self.create_tags(validated_data.pop('tags'), instance)
+        self.create_ingredient(validated_data.pop('ingredients'), instance)
+        return super().update(instance, validated_data)
 
 
 class FavoriteSerializers(serializers.ModelSerializer):

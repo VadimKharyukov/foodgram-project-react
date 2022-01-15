@@ -1,5 +1,6 @@
 from django.core.validators import MinValueValidator
 from django.db import models
+
 from users.models import CustomUser
 
 
@@ -67,6 +68,17 @@ class RecipeIngredient(models.Model):
     amount = models.PositiveSmallIntegerField(
         validators=[MinValueValidator(1)]
     )
+
+    class Meta:
+        ordering = ('-id', )
+        verbose_name = 'Количество ингредиентов'
+        verbose_name_plural = 'Количество ингредиентов'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['ingredient', 'recipe'],
+                name='unique_list_ingredient_recipe'
+            )
+        ]
 
 
 class Favorite(models.Model):
