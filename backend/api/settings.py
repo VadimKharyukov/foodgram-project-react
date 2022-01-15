@@ -7,7 +7,7 @@ SECRET_KEY = os.environ.get(
     "p&l%385148kslhtyn^$$a11ilz@4zqj=rq&agdol^$$zgl99vs"
 )
 
-DEBUG = True #os.environ.get("DEBUG")
+DEBUG = os.environ.get("DEBUG")
 
 ALLOWED_HOSTS = os.environ.get("AllOWED_HOST", '*')
 
