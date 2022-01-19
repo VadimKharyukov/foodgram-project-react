@@ -13,9 +13,19 @@ class CustomUserCreateSerializers(UserCreateSerializer):
 
 
 class CustomUserSerializers(UserSerializer):
+    is_subscribed = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = CustomUser
-        fields = ('id', 'username', 'email', 'first_name', 'last_name')
+        fields = ('id', 'username', 'email',
+                  'first_name', 'last_name', 'is_subscribed')
+
+    def get_is_subscribed(self, obj):
+        request = self.context.get('request')
+        if not request or request.user.is_anonymous:
+            return False
+        return Follow.objects.filter(user=request.user,
+                                     author=obj).exists()
 
 
 class FollowSerializers(serializers.ModelSerializer):

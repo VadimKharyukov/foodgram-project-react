@@ -110,6 +110,28 @@ class RecipeSerializers(serializers.ModelSerializer):
         self.create_ingredient(validated_data.pop('ingredients'), instance)
         return super().update(instance, validated_data)
 
+    def validate(self, data):
+        ingredients = self.initial_data.get('ingredients')
+        ingredients_list = []
+        for ingredient in ingredients:
+            ingredient_id = ingredient['id']
+            if ingredient_id in ingredients_list:
+                raise serializers.ValidationError({
+                    'ingredients': 'Ингредиенты должны быть уникальными!'
+                })
+            ingredients_list.append(ingredient_id)
+            amount = ingredient['amount']
+            if int(amount) <= 0:
+                raise serializers.ValidationError({
+                    'amount': 'Количество ингредиента должно быть больше нуля!'
+                })
+        cooking_time = self.initial_data.get('cooking_time')
+        if int(cooking_time) <= 0:
+            raise serializers.ValidationError({
+                'cooking_time': 'Время приготовления должно быть больше 0!'
+            })
+        return data
+
 
 class FavoriteSerializers(serializers.ModelSerializer):
     class Meta:
